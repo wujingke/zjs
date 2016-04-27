@@ -119,4 +119,28 @@ class XML
 
         return $xml;
     }
+    public static function array2xml($array, $root='')
+    {
+        $xml='';
+        if ($root) {
+            $xml .= "<{$root}>";
+        }
+        foreach ($array as $key=>$val) {
+            if (is_numeric($key)) {
+                $xml.=is_array($val)?self::array2xml($val):$val;
+            } else {
+                //去掉空格，只取空格之前文字为key
+                list($key, )=explode(' ', $key);
+                $xml.="<$key>";
+                $xml.=is_array($val)?self::array2xml($val):$val;
+                //去掉空格，只取空格之前文字为key
+                list($key, )=explode(' ', $key);
+                $xml.="</$key>";
+            }
+        }
+        if ($root) {
+            $xml  .= "</{$root}>";
+        }
+        return $xml;
+    }
 }
