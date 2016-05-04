@@ -43,6 +43,6 @@ class Utils
 
     public static function formatXML($xml='')
     {
-        return str_replace(array('&lt;', '&gt;', '<string xmlns="http://edi.zjs.com.cn/">'), array('<', '>', ''), $xml);
+        return str_replace(array('&lt;', '&gt;', '<string xmlns="http://edi.zjs.com.cn/">', '<string xmlns="http://tempuri.org/">'), array('<', '>', '', ''), $xml);
     }
 }
