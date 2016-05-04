@@ -6,7 +6,7 @@
 ## 安装
 
 ```
-composer require wujingke/zj
+composer require wujingke/zjs
 ```
 
 更新你的依赖包 ```composer update``` 或者全新安装 ```composer install```。
