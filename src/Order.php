@@ -30,7 +30,30 @@ class Order
         $this->const=$const;
         $this->url=$url;
 
+        $this->attributes['orderNo']='';
+        $this->attributes['subOrderNo']='';
+        $this->attributes['tradeNo']='';
+        $this->attributes['mailNo']='';
         $this->attributes['type'] =1;
+        $this->attributes['flag']=0;
+        $this->attributes['sender']=array();
+        $this->attributes['receiver']=array();
+        $sendStartTime='';
+        $sendEndTime='';
+        $this->attributes['sendStartTime'] = $sendStartTime;
+        $this->attributes['sendEndTime'] = $sendEndTime;
+        $this->attributes['codAmount']='0';
+        $this->attributes['items']=array();
+        $this->attributes['itemsName'] = '';
+        $this->attributes['itemsNumber'] = '';
+
+        $this->attributes['itemsWeight'] = '';
+        $this->attributes['itemsVolume'] = '';
+        $this->attributes['itemsValue'] = '';
+        $this->attributes['insuranceValue']='';
+        $this->attributes['loadRequire']='';
+        $this->attributes['remark']='';
+        $this->attributes['dataFlag']='';
     }
     public function setSender(Sender $sender)
     {
@@ -48,11 +71,11 @@ class Order
     }
     public function setMailNo($mailNo=0)
     {
-        $this->attributes['MailNo']=$mailNo;
+        $this->attributes['mailNo']=$mailNo;
     }
     public function setRemark($remark)
     {
-        $this->remark=$remark;
+        $this->attributes['remark']=$remark;
     }
 
     /**
@@ -66,15 +89,14 @@ class Order
      *
      * @return string
      */
-    public function setItem($name, $number, $value=0, $weight=0, $volume=0)
+    public function setItem($name, $number, $value="0.00", $weight="0.00", $volume='21.0×29.7')
     {
-        $keys=array('itemName','itemNumber','itemValue','itemWeight','itemVolume');
-        $args = func_get_args();
-        $array=array();
+        $array['itemName'] = $name;
+        $array['itemNumber'] = $number;
+        $array['itemValue'] = $value;
+        $array['itemWeight'] = $weight;
+        $array['itemVolume'] = $volume;
 
-        foreach ($args as $k=> $v) {
-            $array[$keys[$k]] = $v;
-        }
 
         $this->attributes['items'][]=$array;
     }
@@ -91,22 +113,20 @@ class Order
      *
      * @return string
      */
-    public function setItems($name, $number, $value=0, $weight=0, $volume=0)
+    public function setItems($name, $number, $value="0.00", $weight="0.05", $volume='21.0×29.7')
     {
-        $keys=array('itemsName','itemsNumber','itemsValue','itemsWeight','itemsVolume');
-        $args = func_get_args();
-        $array=array();
+        $this->attributes['itemsName'] = $name;
+        $this->attributes['itemsNumber'] = $number;
 
-        foreach ($args as $k=> $v) {
-            $array[$keys[$k]] = $v;
-        }
-
-        $this->attributes[]=$array;
+        $this->attributes['itemsWeight'] = $weight;
+        $this->attributes['itemsVolume'] = $volume;
+        $this->attributes['itemsValue'] = $value;
     }
     public function push()
     {
         $this->toBuildXML();
         $data = $this->sign();
+        
         $http = new Http();
         $return =$http->post($this->url.'/OrderXML', $data);
 

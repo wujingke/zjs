@@ -11,7 +11,19 @@ class Sender extends MagicAttributes
      *
      * @var array
      */
-    protected $valids = array('name', 'phone', 'prov', 'city','district','address');
+    protected $valids = array('name',  'prov', 'city','district','address');
+
+    public function __construct()
+    {
+        $this->attributes['name']='';
+        $this->attributes['phone']='';
+        $this->attributes['postCode']='';
+        $this->attributes['mobile']='';
+        $this->attributes['prov']='';
+        $this->attributes['city']='';
+        $this->attributes['district']='';
+        $this->attributes['address']='';
+    }
 
     /**
      * 检测参数值是否有效.

@@ -6,6 +6,17 @@ use ZJS\Libary\MagicAttributes;
 //接收人
 class Receiver extends MagicAttributes
 {
+    public function __construct()
+    {
+        $this->attributes['name']='';
+        $this->attributes['postCode']='';
+        $this->attributes['phone']='';
+        $this->attributes['mobile']='';
+        $this->attributes['prov']='';
+        $this->attributes['city']='';
+        $this->attributes['district']='';
+        $this->attributes['address']='';
+    }
     /**
      * 有效的参数.
      *
